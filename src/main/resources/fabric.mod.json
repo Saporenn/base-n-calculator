@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "base-n-calculator",
+	"version": "${version}",
+	"name": "Base-N Calculator",
+	"description": "Perform mathematical and logic operations on numbers in arbitrary bases via Minecraft text commands!",
+	"authors": [
+		"Saporen_"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/base-n-calculator/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"base_n_calculator.shared.entry.Initializer"
+		],
+		"client": [
+			"base_n_calculator.client.entry.Initializer"
+		],
+		"fabric-datagen": [
+			"base_n_calculator.client.entry.DataGenerator"
+		]
+	},
+	"mixins": [
+		"base-n-calculator.shared.mixins.config.json",
+		{
+			"config": "base-n-calculator.client.mixins.config.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
