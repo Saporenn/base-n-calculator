@@ -13,7 +13,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 
 public class ConvertFrom {
-    private static final String commandName = "convert";
+    private static final String commandName = "convert_from";
     private static final String arg1Name = "starting_radix";
     private static final String arg2Name = "integer";
     private static final String arg3Name = "base_to_convert_to";

@@ -4,6 +4,7 @@ import base_n_calculator.shared.project_constants.NumericConstants;
 import base_n_calculator.shared.project_classes.commands.util.ConversionUtil;
 import base_n_calculator.shared.utils.BaseNUtils;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -82,12 +83,12 @@ public class Signal {
         return command
                 .then(Commands.literal(Signal.commandName)
                         .then(Commands.literal(Signal.encodeSubcommand_name)
-                                .then(Commands.argument(Signal.decodeSubcommand_arg_1_name, IntegerArgumentType.integer(NumericConstants.MIN_SIGNAL_STRENGTH, NumericConstants.MAX_SIGNAL_STRENGTH))
+                                .then(Commands.argument(Signal.decodeSubcommand_arg_1_name, StringArgumentType.string())
                                         .executes(Signal::executeEncodeShared)
                                 )
                         )
                         .then(Commands.literal(Signal.decodeSubcommand_name)
-                                .then(Commands.argument(Signal.decodeSubcommand_arg_1_name, IntegerArgumentType.integer(NumericConstants.MIN_SIGNAL_STRENGTH, NumericConstants.MAX_SIGNAL_STRENGTH))
+                                .then(Commands.argument(Signal.decodeSubcommand_arg_1_name, StringArgumentType.string())
                                         .executes(Signal::executeDecodeShared)
                                 )
                         )

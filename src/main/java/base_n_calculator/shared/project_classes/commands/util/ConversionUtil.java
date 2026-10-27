@@ -42,7 +42,7 @@ public class ConversionUtil {
             throw INVALID_STRING.create(conversionResult.finalString(), baseToConvertTo, conversionResult.firstInvalidChar(), conversionResult.firstInvalidIndex());
         }
 
-        return Component.literal(">> "+ resultMessage + ": "+ conversionResult.finalString() + "(Base-" + baseToConvertTo + ")" );
+        return Component.literal(">> "+ resultMessage + ": "+ conversionResult.finalString() + " (Base-" + baseToConvertTo + ")" );
     }
 
     public static Component tryConvert(CommandContext<?> context, String arg1Name, String arg2Name) throws CommandSyntaxException {
