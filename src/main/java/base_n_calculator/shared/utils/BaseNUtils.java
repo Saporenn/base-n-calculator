@@ -1,7 +1,5 @@
 package base_n_calculator.shared.utils;
 
-import java.nio.charset.StandardCharsets;
-
 public class BaseNUtils {
     public interface ConversionResult {
         boolean success();

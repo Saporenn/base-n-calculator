@@ -2,7 +2,6 @@ package base_n_calculator.client.entry;
 
 import base_n_calculator.client.project_managers.ClientCommandRegistry;
 import base_n_calculator.shared.project_classes.BNCModuleEnvironment;
-import base_n_calculator.shared.project_managers.BooleanExpressionRegistry;
 import net.fabricmc.api.ClientModInitializer;
 
 public class Initializer implements ClientModInitializer {

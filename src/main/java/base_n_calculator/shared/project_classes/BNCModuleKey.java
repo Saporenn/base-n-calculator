@@ -1,7 +1,6 @@
 package base_n_calculator.shared.project_classes;
 
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class BNCModuleKey<TBNCModuleType extends BNCModule> {
