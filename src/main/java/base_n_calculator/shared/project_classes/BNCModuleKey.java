@@ -20,11 +20,4 @@ public class BNCModuleKey<TBNCModuleType extends BNCModule> {
     public Supplier<TBNCModuleType> getFactory() {
         return this.factory;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        return ((BNCModuleKey<?>) obj).factory == this.factory && ((BNCModuleKey<?>) obj).name.equals(this.name);
-    }
 }

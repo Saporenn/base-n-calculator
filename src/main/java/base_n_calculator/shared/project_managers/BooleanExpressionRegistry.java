@@ -9,15 +9,15 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class RadixRepresentationRegistry extends BNCModule {
-    public static String LABEL = "RADIX_REPRESENTATION_REGISTRY";
-    public static final BNCModuleKey<RadixRepresentationRegistry> KEY
-            = new BNCModuleKey<>(RadixRepresentationRegistry.LABEL, RadixRepresentationRegistry::new);
+public class BooleanExpressionRegistry extends BNCModule {
+    public static String LABEL = "RADIXREPRESENTATION_REGISTRY";
+    public static final BNCModuleKey<BooleanExpressionRegistry> KEY
+            = new BNCModuleKey<>(BooleanExpressionRegistry.LABEL, BooleanExpressionRegistry::new);
 
     private final Map<String, Integer> aliasToRadixMap = new ConcurrentHashMap<>();
     private final Map<Integer, Set<String>> radixToAliasMap = new ConcurrentHashMap<>();
 
-    public RadixRepresentationRegistry() {
+    public BooleanExpressionRegistry() {
         super(LABEL);
 
         this.onInit("DefaultBaseRepresentationRegisters", (_) -> {
@@ -29,7 +29,7 @@ public class RadixRepresentationRegistry extends BNCModule {
         });
     }
 
-    public RadixRepresentationRegistry add(RadixRepresentation... reps) {
+    public BooleanExpressionRegistry add(RadixRepresentation... reps) {
         for (RadixRepresentation rep : reps) {
             int radix = rep.getRadix();
 
@@ -51,7 +51,7 @@ public class RadixRepresentationRegistry extends BNCModule {
         return this;
     }
 
-    public RadixRepresentationRegistry removeByRadix(int... radices) {
+    public BooleanExpressionRegistry removeByRadix(int... radices) {
         for (int radix : radices) {
             final Set<String> aliasesToRemove = this.radixToAliasMap.get(radix);
             if (aliasesToRemove == null) continue;
@@ -62,7 +62,7 @@ public class RadixRepresentationRegistry extends BNCModule {
         return this;
     }
 
-    public RadixRepresentationRegistry removeByAlias(String... aliases) {
+    public BooleanExpressionRegistry removeByAlias(String... aliases) {
         for (String alias : aliases) {
             final Integer radixAssociatedWithAlias = this.aliasToRadixMap.get(alias);
             if (radixAssociatedWithAlias == null) continue;
@@ -72,7 +72,7 @@ public class RadixRepresentationRegistry extends BNCModule {
         return this;
     }
 
-    public RadixRepresentationRegistry removeAlias(String... aliases) {
+    public BooleanExpressionRegistry removeAlias(String... aliases) {
         for (String alias : aliases) {
             final Integer radixAssociatedWithAlias = this.aliasToRadixMap.get(alias);
             if (radixAssociatedWithAlias == null) continue;

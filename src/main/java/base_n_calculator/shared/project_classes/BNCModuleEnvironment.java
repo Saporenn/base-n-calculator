@@ -115,6 +115,10 @@ public class BNCModuleEnvironment {
             throw new RuntimeException("Environment cannot add modules in it's current state.");
         }
 
+        if (this.hasInstanceOfModuleKey(moduleKey)) {
+            throw new RuntimeException("Environment cannot add module instance of duplicate key '" + moduleKey.getName() + "'.");
+        }
+
         BNCModule module = moduleKey.getFactory().get();
         module.attachEnvironmentLink(this.environmentLink);
         this.moduleInstances.put(moduleKey, module);
@@ -163,7 +167,7 @@ public class BNCModuleEnvironment {
     }
 
     public Collection<BNCModule> getModules() {
-        return this.moduleInstances.values();
+        return List.copyOf(this.moduleInstances.values());
     }
 
     public boolean hasModule(BNCModule module) {

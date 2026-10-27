@@ -1,6 +1,8 @@
 package base_n_calculator.shared.entry;
 
-import base_n_calculator.shared.project_services.BNCBootstrapperService;
+import base_n_calculator.shared.project_classes.BNCModuleEnvironment;
+import base_n_calculator.shared.project_managers.BooleanExpressionRegistry;
+import base_n_calculator.shared.project_managers.SharedCommandRegistry;
 import net.minecraft.resources.Identifier;
 import net.fabricmc.api.ModInitializer;
 
@@ -16,8 +18,10 @@ public class Initializer implements ModInitializer {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
-
-        BNCBootstrapperService.boot();
+        final BNCModuleEnvironment env = new BNCModuleEnvironment()
+                .injectModule(SharedCommandRegistry.KEY)
+                .init()
+                .start();
     }
 
     public static Identifier id(String path) {

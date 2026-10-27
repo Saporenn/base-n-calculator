@@ -1,32 +1,18 @@
 You're almost finished. You just need to handle a few things, and then its going to actual modding.
 
-1. Add 3 methods on `BNCModule`:
-    - require()
-    - requireInitialized()
-    - requireStarted()
+(CURRENT)
+1. Refactor module framework to allow better separation of client and server
+2. Separate client and server command functions, whilst retaining relevant util libs for both.
+3. Consider making the a ClientCommandRegistry aswell.
 
-  `require()` should check if a module stored in the environment, throw if it doesn't exist, and return it if it does.
-  `requireInitialized()` should do the same as `require`, but also check if the required module has initialized.
-  `requireStarted()` should do the same as `require`, but also check if the required module has started.
 
-  It's important that these methods are only called on the module after a context has been attached to it.
-
-  The goal is allowing cyclic dependencies whilst maintaining safety.
-  Each of these methods explicitly or implicitly ensure contracts on the point in time it is actually safe or dangerous for function to cyclically depend on another.
-
-  1a. At this point, it may be important to refactor `BNCModuleEnvironment` and `BNCEnvironmentContext` bit to actually handle what they should both be responsible for.
-      Currently, `BNCEnvironmentContext` does alot, acting as both a container for registered modules and a way for modules to require others during lifecycle operations.
-      This is too much. It just needs to be able to perform the behavior mentioned above; allow for modules to require others, and resolve dependencies if needed.
-      `BNCEnvironment` should be what holds all of the registered modules, and the context should have a reference to said environment, which will likely be passed
-      into it's constructor when a `BNCEnvironment` is instantiating. So no new class like mentioned previously, just refactor the ones you already had.
-      It might not even be worth storing the context inside of the module anymore, and "context" would hardly be an appropriate name to refer to this object, so consider a full rebrand.
-
+(DEFERRED)
+1. Remove all the BS "thread-safe" code you have. This should be a single threaded system, so there is no need for ConcurrentHashSets/Maps when doing any of these operations.
 2. Consider making a function called `markUnsafeUntil()` on a ModuleKey or Module. This allows for further explicitness on the safety of requiring a module at a given  time.
    Of course, this needs to happen whilst a module hasn't been registered or is uninitialized, and never after.
 
-3. Remove all the BS "thread-safe" code you have. This should be a single threaded system, so there is no need for ConcurrentHashSets/Maps when doing any of these operations.
 
-At this point, you should be done! Then all that's left is making the actual mod.
+
 
 env
     .inject(values)

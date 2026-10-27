@@ -39,4 +39,24 @@ public final class StringUtils {
 
         return formattedName.toString();
     }
+
+    public static String toNth(int num) {
+        if (num <= 0) {
+            throw new IllegalArgumentException("StringUtils.toNth expects a positive integer");
+        }
+
+        String numericString = Integer.toString(num);
+        int len = numericString.length();
+
+        if (len > 1 && numericString.charAt(len - 2) == '1') {
+            return numericString + "th"; // teens
+        }
+
+        return switch (numericString.charAt(len - 1)) {
+            case ('1') -> numericString + "st";
+            case ('2') -> numericString + "nd";
+            case ('3') -> numericString + "rd";
+            default -> numericString + "th";
+        };
+    }
 }

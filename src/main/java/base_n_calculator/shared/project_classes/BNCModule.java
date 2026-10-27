@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public abstract class BNCModule {
-    private static String UNLABELED_MODULE = "UnlabledBNCModule";
+    private final static String UNLABELED_MODULE = "UnlabledBNCModule";
     private static Optional<IllegalStateException> checkStateTransition(BNCModuleState requiredState, BNCModuleState targetState, BNCModule module) {
         if (module.currentState != requiredState) {
             return Optional.of(new IllegalStateException("Module '" + module.label
@@ -75,7 +75,7 @@ public abstract class BNCModule {
 
     public final void attachEnvironmentLink(BNCModuleEnvironmentLink newLink) {
         if (this.environmentLink != null) {
-            throw new RuntimeException("");
+            throw new RuntimeException("Attempt to attach new environment link to module '" + this.label + "' whilst it's already linked.");
         }
         this.environmentLink = newLink;
     }
