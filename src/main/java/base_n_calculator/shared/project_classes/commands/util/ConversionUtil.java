@@ -33,13 +33,13 @@ public class ConversionUtil {
     );
 
     private static final Dynamic4CommandExceptionType INVALID_STRING = new Dynamic4CommandExceptionType(
-            (invalidString, base, invalidCharacter, invalidIndex) -> Component.literal("The provided string '" + invalidString + "' has an invalid character '" + invalidCharacter + "' for it's base ("+ base + ") at the " + StringUtils.toNth((int) invalidIndex) + " character.")
+            (invalidString, base, invalidCharacter, invalidIndex) -> Component.literal("The provided string '" + invalidString + "' has an invalid character '" + invalidCharacter + "' for it's base ("+ base + ") at the " + StringUtils.toNth((int) invalidIndex + 1) + " character.")
     );
 
     public static Component getConversionLiteralComponentOrThrow(int baseToConvertFrom, String integerString, int baseToConvertTo, String resultMessage) throws CommandSyntaxException {
         ConversionResult conversionResult = BaseNUtils.convert(baseToConvertFrom, integerString, baseToConvertTo);
         if (!conversionResult.success()) {
-            throw INVALID_STRING.create(conversionResult.inputtedString(), baseToConvertTo, conversionResult.firstInvalidChar(), conversionResult.firstInvalidIndex());
+            throw INVALID_STRING.create(conversionResult.inputtedString(), baseToConvertFrom, conversionResult.firstInvalidChar(), conversionResult.firstInvalidIndex());
         }
 
         return Component.literal(">> "+ resultMessage + ": "+ conversionResult.finalString() + " (Base-" + baseToConvertTo + ")" );
@@ -67,7 +67,6 @@ public class ConversionUtil {
                 || character == 'd'
                 || character == 'x'
             ) break;
-
         }
 
         String inputtedPrefix = prefixBuilder.toString();
