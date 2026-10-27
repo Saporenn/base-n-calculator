@@ -12,7 +12,7 @@ public class RadixPrefixes {
         map.put("0x", 16);
 
         for (int i = NumericConstants.MIN_RADIX_AMOUNT; i <= NumericConstants.MAX_RADIX_AMOUNT ; i++) {
-            map.put(i + ";", i);
+            map.put(i + "_", i);
         }
 
         return map;

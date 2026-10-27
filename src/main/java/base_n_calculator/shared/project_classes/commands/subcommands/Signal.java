@@ -72,7 +72,7 @@ public class Signal {
                                 )
                         )
                         .then(ClientCommands.literal(Signal.decodeSubcommand_name)
-                                .then(ClientCommands.argument(decodeSubcommand_arg_1_name, IntegerArgumentType.integer(NumericConstants.MIN_SIGNAL_STRENGTH, NumericConstants.MAX_SIGNAL_STRENGTH))
+                                .then(ClientCommands.argument(decodeSubcommand_arg_1_name, StringArgumentType.string())
                                         .executes(Signal::executeDecodeClient)
                                 )
                         )
@@ -83,7 +83,7 @@ public class Signal {
         return command
                 .then(Commands.literal(Signal.commandName)
                         .then(Commands.literal(Signal.encodeSubcommand_name)
-                                .then(Commands.argument(Signal.decodeSubcommand_arg_1_name, StringArgumentType.string())
+                                .then(Commands.argument(Signal.encodeSubcommand_arg_1_name, IntegerArgumentType.integer(NumericConstants.MIN_SIGNAL_STRENGTH, NumericConstants.MAX_SIGNAL_STRENGTH))
                                         .executes(Signal::executeEncodeShared)
                                 )
                         )

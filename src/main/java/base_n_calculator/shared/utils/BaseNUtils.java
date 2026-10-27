@@ -3,6 +3,7 @@ package base_n_calculator.shared.utils;
 public class BaseNUtils {
     public interface ConversionResult {
         boolean success();
+        String inputtedString();
         String finalString();
         char firstInvalidChar();
         int firstInvalidIndex();
@@ -10,18 +11,21 @@ public class BaseNUtils {
 
     private static final class CR implements ConversionResult {
         final boolean success;
+        final String inputtedString;
         final String finalString;
         final char firstInvalidChar;
         final int firstInvalidIndex;
 
-        CR(boolean success, String finalString, char firstInvalidChar, int firstInvalidIndex) {
+        CR(boolean success, String inputtedString, String finalString, char firstInvalidChar, int firstInvalidIndex) {
             this.success = success;
+            this.inputtedString = inputtedString;
             this.finalString = finalString;
             this.firstInvalidChar = firstInvalidChar;
             this.firstInvalidIndex = firstInvalidIndex;
         }
 
         public boolean success() {return this.success;}
+        public String inputtedString() {return this.inputtedString;}
         public String finalString() {return this.finalString;}
         public char firstInvalidChar() {return this.firstInvalidChar;}
         public int firstInvalidIndex() {return this.firstInvalidIndex;}
@@ -90,6 +94,7 @@ public class BaseNUtils {
                 if (startingIntString.charAt(i) != '1') return
                 new CR(
                         false,
+                        startingIntString,
                         INVALID_STRING,
                         startingIntString.charAt(i),
                         startingIntString.length() - i - 1
@@ -106,6 +111,7 @@ public class BaseNUtils {
                     return
                         new CR(
                         false,
+                                startingIntString,
                                 INVALID_STRING,
                                 startingIntString.charAt(normalizedStringPosition),
                                 normalizedStringPosition
@@ -117,11 +123,12 @@ public class BaseNUtils {
         }
 
         if (baseToTranslateTo == 10) {
-            return new CR(true, Integer.toString(integerValueInDecimal), ' ', -1);
+            return new CR(true, startingIntString, Integer.toString(integerValueInDecimal), ' ', -1);
         }
 
         return new CR(
                 true,
+                startingIntString,
                 convertBase10ToBaseN(integerValueInDecimal, baseToTranslateTo, translationRadixAlphabet),
                 ' ',
                 -1

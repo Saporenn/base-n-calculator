@@ -33,13 +33,13 @@ public class ConversionUtil {
     );
 
     private static final Dynamic4CommandExceptionType INVALID_STRING = new Dynamic4CommandExceptionType(
-            (invalidString, base, invalidCharacter, invalidIndex) -> Component.literal("The provided string '" + invalidString + "' has an invalid character '" + invalidCharacter + "' for it's base ("+ base + ") at the " + StringUtils.toNth((int) invalidIndex + 1) + " character.")
+            (invalidString, base, invalidCharacter, invalidIndex) -> Component.literal("The provided string '" + invalidString + "' has an invalid character '" + invalidCharacter + "' for it's base ("+ base + ") at the " + StringUtils.toNth((int) invalidIndex) + " character.")
     );
 
     public static Component getConversionLiteralComponentOrThrow(int baseToConvertFrom, String integerString, int baseToConvertTo, String resultMessage) throws CommandSyntaxException {
         ConversionResult conversionResult = BaseNUtils.convert(baseToConvertFrom, integerString, baseToConvertTo);
         if (!conversionResult.success()) {
-            throw INVALID_STRING.create(conversionResult.finalString(), baseToConvertTo, conversionResult.firstInvalidChar(), conversionResult.firstInvalidIndex());
+            throw INVALID_STRING.create(conversionResult.inputtedString(), baseToConvertTo, conversionResult.firstInvalidChar(), conversionResult.firstInvalidIndex());
         }
 
         return Component.literal(">> "+ resultMessage + ": "+ conversionResult.finalString() + " (Base-" + baseToConvertTo + ")" );
@@ -55,7 +55,16 @@ public class ConversionUtil {
             throw RADIX_PREFIXED_NUM_TOO_SHORT.create(prefixedIntegerString.length());
         }
 
-        String inputtedPrefix = prefixedIntegerString.substring(0, 2);
+        StringBuilder prefixBuilder = new StringBuilder();
+
+        for (int i = 0; i < 3 || i < prefixedIntegerString.length(); i++) {
+            final char character = prefixedIntegerString.charAt(i);
+            prefixBuilder.append(character);
+
+            if (character == '_') break;
+        }
+
+        String inputtedPrefix = prefixBuilder.toString();
         if (!validPrefixes.containsKey(inputtedPrefix)) {
             throw RADIX_PREFIXED_NUM_UNKNOWN_PREFIX.create(inputtedPrefix);
         }
