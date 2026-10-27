@@ -21,16 +21,16 @@ public class SharedCommandRegistry extends BNCModule {
         this.onStart("CommandRegistration", (_) -> {
             CommandRegistrationCallback.EVENT.register((dispatcher, buildContext, selection) -> {
                 var root = Commands.literal("bnc");
-                root.then(Author.registerShared(root));
-                root.then(Axolotl.registerShared(root));
-                // root.then(Calc.registerShared(root));
-                root.then(Convert.registerShared(root));
-                root.then(ConvertFrom.registerShared(root));
-                root.then(Help.registerShared(root));
-                // root.then(Register.registerShared(root));
-                root.then(Signal.registerShared(root));
-                // root.then(Simplify.registerShared(root));
-                // root.then(TruthTable.registerShared(root));
+                Author.registerShared(root);
+                Axolotl.registerShared(root);
+                // Calc.registerShared(root);
+                Convert.registerShared(root);
+                ConvertFrom.registerShared(root);
+                Help.registerShared(root);
+                // Register.registerShared(root);
+                Signal.registerShared(root);
+                // Simplify.registerShared(root);
+                // TruthTable.registerShared(root);
 
                 dispatcher.register(root);
             });

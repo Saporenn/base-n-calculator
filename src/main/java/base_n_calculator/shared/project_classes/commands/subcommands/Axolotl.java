@@ -31,7 +31,7 @@ public class Axolotl {
                 .executes(Axolotl::executeClient));
     }
 
-    public static LiteralArgumentBuilder<CommandSourceStack> registerShared(LiteralArgumentBuilder<CommandSourceStack> command) {
+        public static LiteralArgumentBuilder<CommandSourceStack> registerShared(LiteralArgumentBuilder<CommandSourceStack> command) {
         return command
                 .then(Commands.literal(Axolotl.commandName)
                 .executes(Axolotl::executeShared));

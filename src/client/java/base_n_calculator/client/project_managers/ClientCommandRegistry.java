@@ -22,16 +22,16 @@ public class ClientCommandRegistry extends BNCModule {
         this.onStart("CommandRegistration", (_) -> {
             ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
                 var root = ClientCommands.literal("bnc");
-                root.then(Author.registerClient(root));
-                root.then(Axolotl.registerClient(root));
-                // root.then(Calc.registerShared(root));
-                root.then(Convert.registerClient(root));
-                root.then(ConvertFrom.registerClient(root));
-                root.then(Help.registerClient(root));
-                // root.then(Register.registerShared(root));
-                root.then(Signal.registerClient(root));
-                // root.then(Simplify.registerShared(root));
-                // root.then(TruthTable.registerShared(root));
+                Author.registerClient(root);
+                Axolotl.registerClient(root);
+                // Calc.registerClient(root);
+                Convert.registerClient(root);
+                ConvertFrom.registerClient(root);
+                Help.registerClient(root);
+                // Register.registerClient(root);
+                Signal.registerClient(root);
+                // Simplify.registerClient(root);
+                // TruthTable.registerClient(root);
 
                 dispatcher.register(root);
             });
