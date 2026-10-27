@@ -57,11 +57,17 @@ public class ConversionUtil {
 
         StringBuilder prefixBuilder = new StringBuilder();
 
-        for (int i = 0; i < 3 || i < prefixedIntegerString.length(); i++) {
+        for (int i = 0; i < 3; i++) {
             final char character = prefixedIntegerString.charAt(i);
             prefixBuilder.append(character);
 
-            if (character == '_') break;
+            if (character == '_'
+                || character == 'b'
+                || character == 'o'
+                || character == 'd'
+                || character == 'x'
+            ) break;
+
         }
 
         String inputtedPrefix = prefixBuilder.toString();
@@ -74,7 +80,7 @@ public class ConversionUtil {
             throw RADIXES_ARE_EQUIVALENT.create(inputtedPrefix, baseToConvertTo);
         }
 
-        return getConversionLiteralComponentOrThrow(baseToConvertFrom, prefixedIntegerString.substring(2), baseToConvertTo, "Conversion Result");
+        return getConversionLiteralComponentOrThrow(baseToConvertFrom, prefixedIntegerString.substring(inputtedPrefix.length()), baseToConvertTo, "Conversion Result");
     }
 
     public static Component tryConvertFrom(CommandContext<?> context, String arg1Name, String arg2Name, String arg3Name) throws  CommandSyntaxException {
