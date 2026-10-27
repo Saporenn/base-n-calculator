@@ -1,5 +1,9 @@
 package base_n_calculator.shared.utils;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
+
 public class BaseNUtils {
     public interface ConversionResult {
         boolean success();
@@ -66,28 +70,32 @@ public class BaseNUtils {
         return ALPHABET_FAMILIES.BASE63_AND_64.substring(0, radix);
     }
 
-    private static String convertBase10ToBaseN(int base10Integer, int baseToTranslateTo, String translationRadixAlphabet) {
-        if (base10Integer == 0) {
+    private static String convertBase10ToBaseN(BigInteger base10Integer, BigInteger baseToTranslateTo, String translationRadixAlphabet) {
+        if (base10Integer.equals(BigInteger.ZERO)) {
             return String.valueOf(translationRadixAlphabet.charAt(0));
         }
 
         StringBuilder result = new StringBuilder();
 
-        while (base10Integer > 0) {
-            int remainder = base10Integer % baseToTranslateTo;
-            result.append(translationRadixAlphabet.charAt(remainder));
+        while (base10Integer.compareTo(BigInteger.valueOf(0)) > 0) {
+            BigInteger remainder = base10Integer.mod(baseToTranslateTo);
+            result.append(translationRadixAlphabet.charAt(remainder.intValue()));
 
-            base10Integer = Math.floorDiv(base10Integer, baseToTranslateTo);
+            base10Integer = new BigDecimal(base10Integer)
+                    .divide(new BigDecimal(baseToTranslateTo), 0, RoundingMode.FLOOR)
+                    .toBigInteger();
         }
 
-        return result.reverse().toString();
+        return result
+                .reverse()
+                .toString();
     }
 
     public static ConversionResult convert(int startingRadix, String startingIntString, int baseToTranslateTo) {
         final String startingRadixAlphabet = getAlphabetOfRadix(startingRadix);
         final String translationRadixAlphabet = getAlphabetOfRadix(baseToTranslateTo);
 
-        int integerValueInDecimal = 0;
+        BigInteger integerValueInDecimal = new BigInteger("0");
 
         if (startingRadix == 1) {
             for (int i = 0; i < startingIntString.length(); i++) {
@@ -101,7 +109,8 @@ public class BaseNUtils {
                 );
             }
 
-            integerValueInDecimal = startingIntString.length();
+            // minecraft strings max out at 254 characters
+            integerValueInDecimal = BigInteger.valueOf(startingIntString.length());
         } else {
             for (int position = 0; position < startingIntString.length(); position++) {
                 int normalizedStringPosition = startingIntString.length() - position - 1; // we read from lsb
@@ -117,19 +126,30 @@ public class BaseNUtils {
                                 normalizedStringPosition
                         );
                 }
+                BigInteger radix = BigInteger.valueOf(startingRadix);
+                BigInteger baseValue = BigInteger.valueOf(charValue);
 
-                integerValueInDecimal += (int) (charValue * Math.pow(startingRadix, position));
+                BigInteger positionalDigitValue = radix.pow(position);
+                BigInteger resultingDigitValue = baseValue.multiply(positionalDigitValue);
+
+                integerValueInDecimal = integerValueInDecimal.add(resultingDigitValue);
             }
         }
 
         if (baseToTranslateTo == 10) {
-            return new CR(true, startingIntString, Integer.toString(integerValueInDecimal), ' ', -1);
+            return new CR(
+                    true,
+                    startingIntString,
+                    integerValueInDecimal.toString(),
+                    ' ',
+                    -1
+            );
         }
 
         return new CR(
                 true,
                 startingIntString,
-                convertBase10ToBaseN(integerValueInDecimal, baseToTranslateTo, translationRadixAlphabet),
+                convertBase10ToBaseN(integerValueInDecimal, BigInteger.valueOf(baseToTranslateTo), translationRadixAlphabet),
                 ' ',
                 -1
         );
