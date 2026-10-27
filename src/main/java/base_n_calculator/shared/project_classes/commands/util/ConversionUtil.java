@@ -42,7 +42,12 @@ public class ConversionUtil {
             throw INVALID_STRING.create(conversionResult.inputtedString(), baseToConvertFrom, conversionResult.firstInvalidChar(), conversionResult.firstInvalidIndex());
         }
 
-        return Component.literal(">> "+ resultMessage + ": "+ conversionResult.finalString() + " (Base-" + baseToConvertTo + ")" );
+        final int RESULT_FORMATTING_CHAR_AMOUNT = 20; // eventually this whole thing is just going to be refactored and larger strings will just open as a book GUI on a player's screen
+        if (conversionResult.finalString().length() + RESULT_FORMATTING_CHAR_AMOUNT > 0x100) {
+            return Component.literal(">> Conversion Result: Successful, but overflows past Minecraft's native 256 character limit.");
+        }
+
+        return Component.literal(">> " + resultMessage + ": "+ conversionResult.finalString() + " (Base-" + baseToConvertTo + ")" );
     }
 
     public static Component tryConvert(CommandContext<?> context, String arg1Name, String arg2Name) throws CommandSyntaxException {
