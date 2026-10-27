@@ -42,7 +42,7 @@ public class ConversionUtil {
             throw INVALID_STRING.create(conversionResult.inputtedString(), baseToConvertFrom, conversionResult.firstInvalidChar(), conversionResult.firstInvalidIndex());
         }
 
-        final int RESULT_FORMATTING_CHAR_AMOUNT = 20; // eventually this whole thing is just going to be refactored and larger strings will just open as a book GUI on a player's screen
+        final int RESULT_FORMATTING_CHAR_AMOUNT = 30; // eventually this whole thing is just going to be refactored and larger strings will just open as a book GUI on a player's screen
         if (conversionResult.finalString().length() + RESULT_FORMATTING_CHAR_AMOUNT > 0x100) {
             return Component.literal(">> Conversion Result: Successful, but overflows past Minecraft's native 256 character limit.");
         }

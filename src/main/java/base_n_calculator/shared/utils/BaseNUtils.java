@@ -126,6 +126,7 @@ public class BaseNUtils {
                                 normalizedStringPosition
                         );
                 }
+
                 BigInteger radix = BigInteger.valueOf(startingRadix);
                 BigInteger baseValue = BigInteger.valueOf(charValue);
 
@@ -143,6 +144,16 @@ public class BaseNUtils {
                     integerValueInDecimal.toString(),
                     ' ',
                     -1
+            );
+        }
+
+        if (baseToTranslateTo == 1) {
+            return new CR(
+                true,
+                startingIntString,
+                String.valueOf('1').repeat(integerValueInDecimal.intValue()),
+                ' ',
+                -1
             );
         }
 
