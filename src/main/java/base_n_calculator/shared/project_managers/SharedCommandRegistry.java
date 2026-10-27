@@ -14,10 +14,6 @@ public class SharedCommandRegistry extends BNCModule {
     public SharedCommandRegistry() {
         super(LABEL);
 
-        this.onInit("ModuleRequires", (_) -> {
-
-        });
-
         this.onStart("CommandRegistration", (_) -> {
             CommandRegistrationCallback.EVENT.register((dispatcher, buildContext, selection) -> {
                 var root = Commands.literal("bnc");

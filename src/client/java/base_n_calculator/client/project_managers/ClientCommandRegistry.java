@@ -15,10 +15,6 @@ public class ClientCommandRegistry extends BNCModule {
     public ClientCommandRegistry() {
         super(LABEL);
 
-        this.onInit("ModuleRequires", (_) -> {
-
-        });
-
         this.onStart("CommandRegistration", (_) -> {
             ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
                 var root = ClientCommands.literal("bnc");
